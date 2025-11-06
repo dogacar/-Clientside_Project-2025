@@ -1,0 +1,249 @@
+/* === 1. TEMEL KURULUM VE RENK DEĞİŞKENLERİ === */
+:root {
+  --bg-dark: #111827; /* Koyu lacivert arka plan */
+  --bg-card: #1F2937; /* Biraz daha açık kart rengi */
+  --text-light: #F3F4F6; /* Ana metin rengi (beyaza yakın) */
+  --text-muted: #9CA3AF; /* İkincil metin (soluk gri) */
+  --accent-blue: #38BDF8; /* Vurgu rengi (canlı mavi) */
+  --accent-purple: #818CF8; /* İkincil vurgu (hover için) */
+  --border-color: #374151; /* Kenarlıklar için */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* Sayfa içi geçişleri yumuşatır */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  margin: 0;
+  padding: 0 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === 2. GENEL İÇERİK BLOKLARI (HEADER, SECTION, FOOTER) === */
+header,
+section,
+footer {
+  max-width: 42rem; /* Okunabilirlik için daha iyi bir genişlik */
+  margin: 4rem auto;
+}
+
+header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 2rem;
+}
+
+section {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 16px; /* Daha belirgin yuvarlak köşeler */
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Orijinal flex düzeniniz korunuyor (mobil için) */
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* === 3. TİPOGRAFİ VE GÖRSELLER === */
+h1,
+h2 {
+  order: 1; /* JS tarafından eklenen düğmenin üstünde kalır */
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  color: var(--accent-blue); /* Başlıklara vurgu rengi */
+  letter-spacing: -0.5px;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+p {
+  order: 2; /* Başlığın altında */
+  margin-bottom: 1.5rem;
+}
+
+span {
+  font-weight: bold;
+  color: var(--accent-purple); /* Span etiketlerine farklı bir vurgu */
+}
+
+img {
+  order: 3; /* Metinden sonra */
+  width: 100%;
+  border-radius: 12px;
+  margin: 0.5rem 0 1.5rem 0;
+  opacity: 0.9; /* Görseli arka planla hafifçe bütünleştirir */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+img:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* === 4. ETKİLEŞİMLİ ÖĞELER (BUTONLAR) === */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease-out;
+}
+
+/* JavaScript ile eklenen "Kapat" düğmesi */
+button.dismiss {
+  order: 4; /* Kartın en altında */
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+button.dismiss:hover {
+  background: var(--accent-blue);
+  color: var(--bg-dark);
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+/* "Yeniden Yükle" düğmesi */
+#reset {
+  order: 3; /* Header'da metinden sonra */
+  background: var(--accent-blue);
+  color: var(--bg-dark);
+  font-size: 1rem;
+}
+
+#reset:hover {
+  background: var(--accent-purple);
+  transform: scale(1.05);
+}
+
+/* === 5. BÜYÜK EKRAN DÜZENİ (DESKTOP) === */
+/* 1024px ve üzeri ekranlar için */
+@media (min-width: 1024px) {
+  body {
+    font-size: 1.1rem;
+    padding: 0 2rem;
+  }
+
+  /* Header'ı 2 sütunlu grid yapar (Başlık/Açıklama | Buton) */
+  header {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    max-width: 70rem;
+    gap: 2rem;
+  }
+
+  #reset {
+    order: unset; /* Mobil sırayı iptal et */
+    grid-column: 2 / 3;
+    align-self: center;
+    justify-self: end;
+  }
+  
+  header h1, header p {
+    grid-column: 1 / 2;
+  }
+
+  /* Section'ları 2 sütunlu grid yapar (Metin | Görsel) */
+  section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    max-width: 70rem;
+    padding: 2.5rem;
+    align-items: center;
+  }
+
+  /* Mobil flex order'ları sıfırla */
+  h2,
+  p,
+  img,
+  button.dismiss {
+    order: unset;
+  }
+
+  /* Metin ve görsel yerleşimi */
+  img {
+    grid-column: 2 / 3;
+    grid-row: 1 / 4; /* 3 metin satırını da kapla (h2, p, button) */
+    margin: 0;
+  }
+
+  h2 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    text-align: left; /* Hizalamayı düzelt */
+  }
+
+  p {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    margin-bottom: 0.5rem;
+  }
+
+  button.dismiss {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+    justify-self: start; /* Butonu sola yasla */
+    align-self: start;
+    width: auto;
+  }
+
+  /* Çift sayılı section'larda sırayı ters çevir (Görsel | Metin) */
+  section:nth-child(even) img {
+    grid-column: 1 / 2;
+  }
+
+  section:nth-child(even) h2 {
+    grid-column: 2 / 3;
+    text-align: left;
+  }
+
+  section:nth-child(even) p {
+    grid-column: 2 / 3;
+  }
+
+  section:nth-child(even) button.dismiss {
+    grid-column: 2 / 3;
+    justify-self: start;
+  }
+  
+  footer {
+    max-width: 70rem;
+  }
+}
